@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ALLES GUTE ZUM GEBURTSTAG, MAUS</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;600;700&family=Patrick+Hand&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Comfortaa', cursive;
+            background: linear-gradient(135deg, #f8e8ff 0%, #ffe8f0 50%, #f0e0ff 100%);
+            min-height: 100vh;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+
+        /* Floating decorations */
+        .floating-hearts {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .heart {
+            position: absolute;
+            opacity: 0.3;
+            animation: floatHeart linear infinite;
+        }
+
+        @keyframes floatHeart {
+            0% { transform: translateY(100vh) rotate(0deg); }
+            100% { transform: translateY(-100px) rotate(360deg); }
+        }
+
+        .flower {
+            position: absolute;
+            opacity: 0.25;
+            animation: floatFlower linear infinite;
+        }
+
+        @keyframes floatFlower {
+            0% { transform: translateY(100vh) rotate(0deg) scale(0.8); }
+            50% { transform: translateY(50vh) rotate(180deg) scale(1.1); }
+            100% { transform: translateY(-100px) rotate(360deg) scale(0.8); }
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .kitty-face {
+            width: 120px;
+            height: 100px;
+            margin: 0 auto 20px;
+            position: relative;
+        }
+
+        .kitty-face .face {
+            width: 100px;
+            height: 80px;
+            background: white;
+            border-radius: 50%;
+            margin: 0 auto;
+            position: relative;
+            border: 3px solid #e8a0c8;
+            box-shadow: 0 4px 15px rgba(232, 160, 200, 0.3);
+        }
+
+        .kitty-face .ear {
+            position: absolute;
+            width: 0;
+            height: 0;
+            border-left: 18px solid transparent;
+            border-right: 18px solid transparent;
+            border-bottom: 30px solid white;
+            top: -20px;
+        }
+
+        .kitty-face .ear::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 0;
+            border-left: 12px solid transparent;
+            border-right: 12px solid transparent;
+            border-bottom: 20px solid #ffb8d9;
+            top: 8px;
+            left: -12px;
+        }
+
+        .kitty-face .ear-left { left: 12px; }
+        .kitty-face .ear-right { right: 12px; }
+
+        .kitty-face .eye {
+            position: absolute;
+            width: 8px;
+            height: 10px;
+            background: #333;
+            border-radius: 50%;
+            top: 35px;
+        }
+
+        .kitty-face .eye-left { left: 30px; }
+        .kitty-face .eye-right { right: 30px; }
+
+        .kitty-face .nose {
+            position: absolute;
+            width: 8px;
+            height: 6px;
+            background: #ffb347;
+            border-radius: 50%;
+            top: 45px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .kitty-face .whisker {
+            position: absolute;
+            width: 25px;
+            height: 2px;
+            background: #ccc;
+            top: 48px;
+        }
+
+        .kitty-face .whisker-1 { left: -5px; transform: rotate(-5deg); }
+        .kitty-face .whisker-2 { left: -5px; top: 53px; transform: rotate(5deg); }
+        .kitty-face .whisker-3 { right: -5px; transform: rotate(5deg); }
+        .kitty-face .whisker-4 { right: -5px; top: 53px; transform: rotate(-5deg); }
+
+        .kitty-face .bow {
+            position: absolute;
+            top: -10px;
+            right: 5px;
+            width: 30px;
+            height: 20px;
+        }
+
+        .kitty-face .bow::before,
+        .kitty-face .bow::after {
+            content: '';
+            position: absolute;
+            width: 14px;
+            height: 12px;
+            background: #ff6b9d;
+            border-radius: 50%;
+            top: 4px;
+        }
+
+        .kitty-face .bow::before { left: 0; }
+        .kitty-face .bow::after { right: 0; }
+
+        .kitty-face .bow-center {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: #ff4081;
+            border-radius: 50%;
+            top: 6px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1;
+        }
+
+        .header h1 {
+            font-family: 'Patrick Hand', cursive;
+            font-size: 2.5em;
+            color: #c06090;
+            text-shadow: 2px 2px 4px rgba(192, 96, 144, 0.2);
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.2em;
+            color: #d080a0;
+        }
+
+        /* Calendar Grid */
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+            gap: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Slot Cards */
+        .slot {
+            background: white;
+            border-radius: 20px;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 3px solid #f0c0d8;
+            box-shadow: 0 5px 20px rgba(240, 192, 216, 0.3);
+            position: relative;
+            overflow: hidden;
+            min-height: 180px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .slot::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 182, 217, 0.1) 0%, transparent 70%);
+            animation: shimmer 3s ease-in-out infinite;
+        }
+
+        @keyframes shimmer {
+            0%, 100% { transform: rotate(0deg); }
+            50% { transform: rotate(180deg); }
+        }
+
+        .slot:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 10px 30px rgba(240, 150, 200, 0.4);
+            border-color: #ff9ec4;
+        }
+
+        .slot.opened {
+            background: linear-gradient(135deg, #fff0f5, #fce4ec);
+            border-color: #f48fb1;
+        }
+
+        .slot-number {
+            font-size: 2em;
+            font-weight: 700;
+            color: #e080a8;
+            margin-bottom: 10px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .slot-icon {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .slot-hint {
+            font-size: 0.8em;
+            color: #c0a0b0;
+            position: relative;
+            z-index: 1;
+        }
+
+        .slot-content {
+            display: none;
+            padding: 10px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .slot.opened .slot-content {
+            display: block;
+        }
+
+        .slot.opened .slot-locked {
+            display: none;
+        }
+
+        /* Mini decorations on slots */
+        .slot-deco {
+            position: absolute;
+            font-size: 1em;
+            opacity: 0.3;
+        }
+
+        .slot-deco-1 { top: 5px; right: 10px; }
+        .slot-deco-2 { bottom: 5px; left: 10px; }
+
+        /* Modal */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(200, 150, 180, 0.5);
+            backdrop-filter: blur(5px);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal {
+            background: white;
+            border-radius: 30px;
+            padding: 40px;
+            max-width: 450px;
+            width: 90%;
+            text-align: center;
+            border: 4px solid #f0c0d8;
+            box-shadow: 0 20px 60px rgba(240, 150, 200, 0.4);
+            position: relative;
+            animation: modalPop 0.3s ease;
+        }
+
+        @keyframes modalPop {
+            0% { transform: scale(0.8); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .modal-kitty {
+            font-size: 3em;
+            margin-bottom: 15px;
+        }
+
+        .modal h2 {
+            color: #c06090;
+            margin-bottom: 20px;
+            font-size: 1.5em;
+        }
+
+        .modal input {
+            width: 100%;
+            padding: 15px 20px;
+            border: 3px solid #f0c0d8;
+            border-radius: 15px;
+            font-size: 1em;
+            font-family: 'Comfortaa', cursive;
+            outline: none;
+            transition: border-color 0.3s;
+            text-align: center;
+        }
+
+        .modal input:focus {
+            border-color: #ff9ec4;
+        }
+
+        .modal input.error {
+            border-color: #ff6b6b;
+            animation: shake 0.5s ease;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+
+        .modal-btn {
+            margin-top: 20px;
+            padding: 12px 40px;
+            background: linear-gradient(135deg, #ffb6d9, #f48fb1);
+            border: none;
+            border-radius: 25px;
+            color: white;
+            font-size: 1.1em;
+            font-weight: 600;
+            font-family: 'Comfortaa', cursive;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(244, 143, 177, 0.4);
+        }
+
+        .modal-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(244, 143, 177, 0.6);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 1.5em;
+            color: #d0a0b0;
+            cursor: pointer;
+            transition: color 0.3s;
+            background: none;
+            border: none;
+        }
+
+        .modal-close:hover {
+            color: #ff6b9d;
+        }
+
+        .error-msg {
+            color: #ff6b6b;
+            margin-top: 10px;
+            font-size: 0.9em;
+            min-height: 1.2em;
+        }
+
+        /* Present reveal */
+        .present-modal {
+            background: linear-gradient(135deg, #fff5f8, #fce4ec);
+        }
+
+        .present-content {
+            font-size: 1.1em;
+            color: #805070;
+            line-height: 1.6;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: 15px;
+            margin-top: 15px;
+        }
+
+        /* Confetti */
+        .confetti-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 2000;
+        }
+
+        .confetti-piece {
+            position: absolute;
+            top: -20px;
+            animation: confettiFall linear forwards;
+        }
+
+        @keyframes confettiFall {
+            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            .header h1 { font-size: 1.8em; }
+            .calendar-grid { grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 15px; }
+            .slot { min-height: 150px; padding: 15px; }
+            .modal { padding: 25px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="floating-hearts" id="floatingDecos"></div>
+
+    <div class="header">
+        <div class="kitty-face">
+            <div class="face">
+                <div class="ear ear-left"></div>
+                <div class="ear ear-right"></div>
+                <div class="eye eye-left"></div>
+                <div class="eye eye-right"></div>
+                <div class="nose"></div>
+                <div class="whisker whisker-1"></div>
+                <div class="whisker whisker-2"></div>
+                <div class="whisker whisker-3"></div>
+                <div class="whisker whisker-4"></div>
+                <div class="bow">
+                    <div class="bow-center"></div>
+                </div>
+            </div>
+        </div>
+        <h1>ALLES GUTE ZUM GEBURTSTAG, MAUS</h1>
+        <p>H&Ouml;R DIR DEN KLEINEN PODCAST AN, UM DIE PASSW&Ouml;RTER HERAUSZUFINDEN. ICH LIEBE DICH &#x1F497;</p>
+    </div>
+
+    <div class="calendar-grid" id="calendarGrid"></div>
+
+    <!-- Password Modal -->
+    <div class="modal-overlay" id="passwordModal">
+        <div class="modal">
+            <button class="modal-close" onclick="closeModal()">&times;</button>
+            <div class="modal-kitty">&#x1F380;</div>
+            <h2>T&uuml;rchen <span id="modalSlotNumber"></span></h2>
+            <p style="color: #b08090; margin-bottom: 15px;">Gib das Passwort ein:</p>
+            <input type="text" id="passwordInput" placeholder="Passwort..." autocomplete="off">
+            <div class="error-msg" id="errorMsg"></div>
+            <button class="modal-btn" onclick="checkPassword()">&#x1F31F; &Ouml;ffnen</button>
+        </div>
+    </div>
+
+    <!-- Present Modal -->
+    <div class="modal-overlay" id="presentModal">
+        <div class="modal present-modal">
+            <button class="modal-close" onclick="closePresentModal()">&times;</button>
+            <div class="modal-kitty">&#x1F381;</div>
+            <h2>T&uuml;rchen <span id="presentSlotNumber"></span></h2>
+            <div class="present-content" id="presentContent"></div>
+        </div>
+    </div>
+
+    <div class="confetti-container" id="confettiContainer"></div>
+
+    <script>
+        // ============================================
+        // CONFIGURATION - Define your presents here!
+        // ============================================
+        const slots = [
+            { number: 1,  password: "ramen",      icon: "&#x1F35C;", present: "Wir gehen lecker Ramen essen! Ich gebe aus." },
+            { number: 2,  password: "steinbock",   icon: "&#x2B50;",  present: "Wir suchen uns einen netten Fleck und machen ein Picknick unter dem Sternenhimmel." },
+            { number: 3,  password: "mausi",       icon: "&#x1F431;", present: "<em>&bdquo;Niemand bringt mich so h&auml;ufig zum Tr&auml;umen wie du.&ldquo;</em>" },
+            { number: 4,  password: "monster",     icon: "&#x1FA9C;", present: "<em>&bdquo;Ich brauche dich mehr, als ich dir jemals sagen k&ouml;nnte.&ldquo;</em>" },
+            { number: 5,  password: "horror",      icon: "&#x1F469;&#x200D;&#x1F373;", present: "Ich mache uns bald mal wieder den leckeren Auflauf und wir machen einen Filmmarathon deiner Wahl!" },
+            { number: 6,  password: "benjamin",    icon: "&#x1F382;", present: "Ich hole uns eine leckere Torte und wir vernaschen sie zusammen." },
+            { number: 7,  password: "talent",      icon: "&#x1F3A4;", present: "<em>&bdquo;Unsere Kinder werden die sch&ouml;nsten Schlaflieder der Welt von dir h&ouml;ren.&ldquo;</em>" },
+            { number: 8,  password: "gumo",        icon: "&#x1F35E;", present: "Habe ich da Fr&uuml;hst&uuml;ck ans Bett geh&ouml;rt?" },
+            { number: 9,  password: "mama",        icon: "&#x1F475;", present: "<em>&bdquo;Ich kann mir keine bessere Mutter f&uuml;r unsere sp&auml;teren Kinder vorstellen als dich.&ldquo;</em>" },
+            { number: 10, password: "erzieherin",  icon: "&#x1F4D6;", present: "Such dir ein Buch aus! Ich kaufe es dir." },
+            { number: 11, password: "achterbahn",  icon: "&#x1F3A2;", present: "Deine Karte f&uuml;r den Hansapark geht auf mich." },
+            { number: 12, password: "aua",         icon: "&#x1F9B5;", present: "<em>&bdquo;Du gibst mir das Gef&uuml;hl, am richtigen Ort zu sein.&ldquo;</em>" },
+            { number: 13, password: "civ",         icon: "&#x1F3AE;", present: "Wir verkn&uuml;pfen unsere Steam Accounts! Du kannst alle Spiele spielen, die ich habe." },
+            { number: 14, password: "wasser",      icon: "&#x1F9E0;", present: "Dein n&auml;chstes Piercing geht auf mich." },
+            { number: 15, password: "schlau",      icon: "&#x1F469;&#x200D;&#x1F3EB;", present: "<em>&bdquo;Du beeindruckst mich jeden Tag ein St&uuml;ck mehr.&ldquo;</em>" },
+            { number: 16, password: "urlaub",      icon: "&#x1F30D;", present: "Ich baue uns eine Weltkarte zum Ausmalen und Anpinnen von Erinnerungen." },
+            { number: 17, password: "finnland",    icon: "&#x1F6A2;", present: "<em>&bdquo;Neben dir aufzuwachen ist das, was ich den Rest meines Lebens will.&ldquo;</em>" },
+            { number: 18, password: "projekt",     icon: "&#x1F3E0;", present: "<em>&bdquo;Mit dir bin ich &uuml;berall zuhause.&ldquo;</em>" },
+            { number: 19, password: "kunst",       icon: "&#x1F3A8;", present: "Du bekommst die volle Bestimmungsfreiheit bei unserer Inneneinrichtung und Deko." },
+            { number: 20, password: "hochzeit",    icon: "&#x1F48D;", present: "<em>&bdquo;Ich werde so doll weinen, wenn ich dich bei unserer Hochzeit das erste Mal sehen werde.&ldquo;</em>" },
+            { number: 21, password: "name",        icon: "&#x1F476;", present: "Du darfst den Namen unserer zweiten Katze aussuchen." },
+            { number: 22, password: "manieren",    icon: "&#x1F467;", present: "<em>&bdquo;F&uuml;r unsere Kinder wirst du immer die Coole von uns beiden sein.&ldquo;</em>" },
+            { number: 23, password: "alt",         icon: "&#x1F474;", present: "Ich kaufe dir einen Schaukelstuhl, weil du den in D&auml;nemark so sehr mochtest." },
+        ];
+
+        // ============================================
+
+        let currentSlot = null;
+        const openedSlots = JSON.parse(localStorage.getItem('birthdayCalendarOpened') || '[]');
+
+        const decoIcons = ['&#x1F338;', '&#x1F49D;', '&#x1F33C;', '&#x2B50;', '&#x1F33A;', '&#x1F496;'];
+
+        function createFloatingDecos() {
+            const container = document.getElementById('floatingDecos');
+            for (let i = 0; i < 15; i++) {
+                const deco = document.createElement('div');
+                const isHeart = Math.random() > 0.5;
+                deco.className = isHeart ? 'heart' : 'flower';
+                deco.innerHTML = isHeart ? '&#x1F497;' : ['&#x1F338;', '&#x1F33C;', '&#x1F33A;', '&#x1F337;'][Math.floor(Math.random() * 4)];
+                deco.style.left = Math.random() * 100 + '%';
+                deco.style.fontSize = (Math.random() * 20 + 15) + 'px';
+                deco.style.animationDuration = (Math.random() * 10 + 10) + 's';
+                deco.style.animationDelay = (Math.random() * 10) + 's';
+                container.appendChild(deco);
+            }
+        }
+
+        function renderCalendar() {
+            const grid = document.getElementById('calendarGrid');
+            grid.innerHTML = '';
+
+            slots.forEach(slot => {
+                const isOpened = openedSlots.includes(slot.number);
+                const div = document.createElement('div');
+                div.className = 'slot' + (isOpened ? ' opened' : '');
+                div.onclick = () => openSlot(slot.number);
+
+                const deco1 = decoIcons[Math.floor(Math.random() * decoIcons.length)];
+                const deco2 = decoIcons[Math.floor(Math.random() * decoIcons.length)];
+
+                div.innerHTML = `
+                    <span class="slot-deco slot-deco-1">${deco1}</span>
+                    <span class="slot-deco slot-deco-2">${deco2}</span>
+                    <div class="slot-locked">
+                        <div class="slot-icon">${slot.icon}</div>
+                        <div class="slot-number">${slot.number}</div>
+                        <div class="slot-hint">${isOpened ? '&#x1F513; Ge&ouml;ffnet' : '&#x1F512; Tippe zum &Ouml;ffnen'}</div>
+                    </div>
+                    <div class="slot-content">
+                        <div class="slot-icon">${slot.icon}</div>
+                        <div class="slot-number">${slot.number}</div>
+                        <div class="slot-hint" style="color: #f48fb1;">&#x1F49D; Ge&ouml;ffnet!</div>
+                    </div>
+                `;
+                grid.appendChild(div);
+            });
+        }
+
+        function openSlot(number) {
+            const slot = slots.find(s => s.number === number);
+            if (!slot) return;
+
+            if (openedSlots.includes(number)) {
+                showPresent(slot);
+                return;
+            }
+
+            currentSlot = slot;
+            document.getElementById('modalSlotNumber').textContent = number;
+            document.getElementById('passwordInput').value = '';
+            document.getElementById('passwordInput').className = '';
+            document.getElementById('errorMsg').textContent = '';
+            document.getElementById('passwordModal').classList.add('active');
+
+            setTimeout(() => document.getElementById('passwordInput').focus(), 100);
+        }
+
+        function checkPassword() {
+            const input = document.getElementById('passwordInput');
+            const entered = input.value.trim().toLowerCase();
+
+            if (entered === currentSlot.password.toLowerCase()) {
+                const unlockedSlot = currentSlot;
+                openedSlots.push(unlockedSlot.number);
+                localStorage.setItem('birthdayCalendarOpened', JSON.stringify(openedSlots));
+                document.getElementById('passwordModal').classList.remove('active');
+                currentSlot = null;
+                launchConfetti();
+                renderCalendar();
+                showPresent(unlockedSlot);
+            } else {
+                input.className = 'error';
+                document.getElementById('errorMsg').textContent = 'Falsches Passwort! Versuch es nochmal &#x1F49C;';
+                setTimeout(() => { input.className = ''; }, 500);
+            }
+        }
+
+        function showPresent(slot) {
+            document.getElementById('presentSlotNumber').textContent = slot.number;
+            document.querySelector('#presentModal .modal-kitty').innerHTML = slot.icon;
+            document.getElementById('presentContent').innerHTML = slot.present;
+            document.getElementById('presentModal').classList.add('active');
+        }
+
+        function closeModal() {
+            document.getElementById('passwordModal').classList.remove('active');
+            currentSlot = null;
+        }
+
+        function closePresentModal() {
+            document.getElementById('presentModal').classList.remove('active');
+        }
+
+        function launchConfetti() {
+            const container = document.getElementById('confettiContainer');
+            const colors = ['#ffb6d9', '#f48fb1', '#ce93d8', '#e1bee7', '#fff59d', '#ffcc80', '#ff8a80'];
+            const shapes = ['&#x1F496;', '&#x2B50;', '&#x1F338;', '&#x2728;', '&#x1F380;'];
+
+            for (let i = 0; i < 40; i++) {
+                const piece = document.createElement('div');
+                piece.className = 'confetti-piece';
+                piece.innerHTML = shapes[Math.floor(Math.random() * shapes.length)];
+                piece.style.left = Math.random() * 100 + '%';
+                piece.style.fontSize = (Math.random() * 15 + 10) + 'px';
+                piece.style.animationDuration = (Math.random() * 2 + 1.5) + 's';
+                piece.style.animationDelay = (Math.random() * 0.5) + 's';
+                container.appendChild(piece);
+            }
+
+            setTimeout(() => { container.innerHTML = ''; }, 4000);
+        }
+
+        // Enter key support
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' && document.getElementById('passwordModal').classList.contains('active')) {
+                checkPassword();
+            }
+            if (e.key === 'Escape') {
+                closeModal();
+                closePresentModal();
+            }
+        });
+
+        // Click outside modal to close
+        document.getElementById('passwordModal').addEventListener('click', (e) => {
+            if (e.target === document.getElementById('passwordModal')) closeModal();
+        });
+        document.getElementById('presentModal').addEventListener('click', (e) => {
+            if (e.target === document.getElementById('presentModal')) closePresentModal();
+        });
+
+        // Initialize
+        createFloatingDecos();
+        renderCalendar();
+    </script>
+</body>
+</html>
